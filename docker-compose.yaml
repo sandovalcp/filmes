@@ -1,0 +1,31 @@
+version: '3.8'
+networks:
+  filmes_net:
+    driver: bridge
+
+volumes:
+  mongo_vol:  
+
+
+services:
+  web:
+    image: sandovalcp/filmes:v1
+    ports: 
+      - "5000:5000"  
+    networks:
+      - filmes_net
+    environment:
+      MONGODB_HOST: mongodb
+      MONGODB_USERNAME: mongouser
+      MONGODB_PASSWORD: mongopwd
+  mongodb:
+    image: mongo
+    volumes:
+      - mongo_vol:/data/db
+    networks:
+      - filmes_net 
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd
+
+
